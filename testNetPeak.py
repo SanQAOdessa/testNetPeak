@@ -32,10 +32,13 @@ class TestNetPeak(unittest.TestCase):
         wait.until(EC.visibility_of_element_located((By.CSS_SELECTOR, "button#submit")))
 
     def uploadCV(self):
-        self.driver.find_element_by_id("upload").click()
+        buttonupload = WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable((By.ID, "upload")))
+        buttonupload.click()
+        # self.driver.find_element_by_id("upload").click()
         # может не работать из-за названия окна, к примеру в английской версии вместо Открытие нужно писать Open
+        file_png = os.getcwd()+'\\testCV.png'
         autoit.win_wait("[CLASS:#32770;TITLE:Открытие]")
-        autoit.control_send("[CLASS:#32770;TITLE:Открытие]", "Edit1", os.getcwd()+"\\testCV.png")
+        autoit.control_set_text("[CLASS:#32770;TITLE:Открытие]", "Edit1", file_png)
         autoit.control_click("[CLASS:#32770;TITLE:Открытие]", "Button1")
         time.sleep(3)
 
